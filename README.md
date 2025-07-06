@@ -136,7 +136,8 @@ Sprint sonunda hedeflenen tüm modüller başarıyla tamamlandı:
 - Duygu analizi modülündeki prompt bazen öneri vermeyebiliyor, iyileştirmeler yapılabilir
 - Frontend kısmı temel işlevleri sağlıyor ancak kullanıcı deneyimi ve tasarım açısından daha fazla geliştirme yapılabilir
 
-### 📎 Belgeler ve Ekler
+<details>
+<summary><strong>📎 Belgeler ve Ekler</strong></summary>
 
 #### 📸 Uygulama Arayüzü
 
@@ -162,6 +163,7 @@ Sprint sonunda hedeflenen tüm modüller başarıyla tamamlandı:
 - Duygu analizi ekranı, kullanıcının ruh halini yazılı olarak girmesini sağlar.
 - Kullanıcı, ruh hali girişini tamamladıktan sonra sistem, **NLP (Doğal Dil İşleme)** teknolojisini kullanarak duygu analizini yapar.  
 - Ekran, kullanıcının duygusal durumunu açıklayan kişiselleştirilmiş öneriler sunar.
+</details>
 
 ---
 
