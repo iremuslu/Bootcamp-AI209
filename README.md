@@ -476,6 +476,37 @@ Sprint sonunda hedeflenen tüm özellikler tamamlandı:
 </details>
 </details>
 
+## 🤖 Yapay Zeka Kullanımı
+
+Emotery uygulaması, kullanıcıların duygularını anlamlandırmasına ve kişiselleştirilmiş öneriler almasına yardımcı olmak için yapay zeka tabanlı doğal dil işleme (NLP) tekniklerinden yararlanmaktadır.
+
+### 📌 Kullanılan AI Bileşenleri
+
+- **Google Gemini 2.5 Pro (LangChain ChatGoogleGenerativeAI ile)**
+  - Kullanıcı günlük metinlerinden tek kelimelik **duygu etiketi** çıkarır.
+  - Empatik bir **yorum** üretir.
+  - Kullanıcıya uygun **3 kişiselleştirilmiş öneri** sunar.
+  
+- **SentenceTransformer (all-MiniLM-L6-v2)**
+  - Günlük metinlerini **vektör embedding**’lerine dönüştürerek benzer ruh halleri arasındaki ilişkileri tespit eder.
+  
+- **ChromaDB**
+  - AI tarafından üretilen embedding’ler **vektör veritabanında** saklanır.
+  - Geçmiş duygu kayıtlarına hızlı erişim ve öneri sisteminin gelecekte gelişmesi için altyapı sağlar.
+
+### 🔍 Çalışma Prensibi
+1. Kullanıcı bir günlük girdisi yazar veya sesli olarak ekler.  
+2. Metin **Gemini AI** ile analiz edilir:
+   - Tek kelimelik bir **duygu etiketi** belirlenir.
+   - Kısa bir **yorum** oluşturulur.
+   - Kullanıcıya uygulanabilir **3 öneri** üretilir.
+3. Bu bilgiler **profil, takvim ve istatistik ekranlarına** entegre edilir.
+
+### 🎯 AI Kullanım Amacı
+- Kullanıcıya **daha anlamlı geri bildirimler** sunmak.
+- Uzun vadede **kişiselleştirilmiş öneri sistemi** geliştirmek.
+- Duygu farkındalığını artırarak kullanıcı deneyimini güçlendirmek.
+
 ## 📝 Jüriye Not 
 
 Proje sürecinde takım arkadaşlarımdan süreç boyunca geri dönüş alamadığım için **geliştirmeleri tek başıma yürüttüm**. Bu durum zaman yönetimini daha kritik hale getirdi ve öncelikleri doğru belirlemeyi gerektirdi.  
