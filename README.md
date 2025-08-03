@@ -63,8 +63,6 @@ Emotery’nin güçlü hafıza sistemi sayesinde, kullanıcıların duygu duruml
 
 ---
 
----
-
 
 ## 📂 Proje Dizini Yapısı
   
