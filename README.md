@@ -63,6 +63,74 @@ Emotery’nin güçlü hafıza sistemi sayesinde, kullanıcıların duygu duruml
 
 ---
 
+---
+
+
+## 📂 Proje Dizini Yapısı
+  
+```plaintext
+  app/         -> Ana uygulama dosyaları
+  routers/     -> API endpointleri
+  static/      -> CSS, JS, resimler
+  templates/   -> HTML şablonları
+  utils/       -> Yardımcı fonksiyonlar
+  main.py      -> FastAPI giriş noktası
+  database.py  -> Veritabanı bağlantısı
+  models.py    -> Veritabanı modelleri
+  emoteryai.db -> SQLite veritabanı
+  requirements.txt -> Gerekli bağımlılıklar
+```
+
+## ⚙️ Projeyi Çalıştırma
+
+<details>
+<summary>Projeyi çalıştırmak için</summary>  
+  
+### 1. Gereksinimler
+  - **Python 3.9+**
+  - **pip** (Python paket yöneticisi)
+  - Veritabanı: **PostgreSQL** veya **SQLite** (varsayılan: SQLite)
+  -   `.env` dosyasında gerekli ortam değişkenleri
+
+---
+
+### 2. Kurulum Adımları
+1. **Depoyu klonla**
+   ```bash
+   git clone https://github.com/iremuslu/Bootcamp-AI209
+   cd Bootcamp-AI209
+
+2. **Sanal Ortam Oluştur**
+   ```bash
+   python -m venv venv
+   
+   Windows:
+   venv\Scripts\activate
+   
+   Mac/Linux:
+   source venv/bin/activate
+ 3. **Bağımlılıkları Yükle**
+    ```bash
+     pip install -r requirements.txt
+
+### 3. Çalıştırma
+#### 1️⃣ `.env` Dosyası Oluştur
+`.env` dosyası proje kök dizininde olmalı.
+
+Örnek `.env` içeriği:
+- GOOGLE_API_KEY=your_google_api_key
+- SECRET_KEY=your_secret_key
+- ACCESS_TOKEN_EXPIRE_MINUTES=30
+- ALGORITHM=HS256
+
+#### 2️⃣ Uygulamayı Başlat
+  ```bash
+  uvicorn main:app --reload  
+ ```
+</details>
+
+
+
 ### 📆 Sprint Raporları
 <details>
 <summary>🔹 Sprint 1</summary>
