@@ -575,6 +575,18 @@ Emotery uygulaması, kullanıcıların duygularını anlamlandırmasına ve kiş
 - Uzun vadede **kişiselleştirilmiş öneri sistemi** geliştirmek.
 - Duygu farkındalığını artırarak kullanıcı deneyimini güçlendirmek.
 
+---
+
+## 🎥 Proje Tanıtım Videosu
+
+<div align="center">
+  <a href="https://youtu.be/y9eVmjq9ohc" target="_blank">
+    <img src="https://github.com/iremuslu/Bootcamp-AI209/blob/main/images/emoterykapak.png" alt="Emotery Tanıtım Videosu" style="width:100%; height:auto;">
+  </a>
+</div>
+
+---
+
 ## 📝 Jüriye Not 
 
 Proje sürecinde takım arkadaşlarımdan süreç boyunca geri dönüş alamadığım için **geliştirmeleri tek başıma yürüttüm**. Bu durum zaman yönetimini daha kritik hale getirdi ve öncelikleri doğru belirlemeyi gerektirdi.  
@@ -590,4 +602,5 @@ Proje sürecinde takım arkadaşlarımdan süreç boyunca geri dönüş alamadı
 ⚠️ **Geliştirme fırsatları**: Bildirim sistemi, chatbot entegrasyonu, gelişmiş öneri algoritmaları ve veri tabanı geçişi gibi alanlar ilerleyen sürümlerde ele alınacaktır.  
 
 ---
+
 
