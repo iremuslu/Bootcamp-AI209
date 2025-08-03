@@ -300,14 +300,226 @@ Sprint sonunda hedeflenen tüm modüller başarıyla tamamlandı:
 - Bu sayfa daha fazla geliştirilcek.
 
 </details>
+</details>
+
+<details>
+<summary>🔹 Sprint 3 </summary>
+
+### 📝 Sprint Hedefi
+Bu sprintin amacı, kullanıcıların geçmiş günlüklerini detaylı şekilde görüntüleyebilmesi, takvim üzerinden hangi günlerde hangi duyguların girildiğini takip edebilmesi, motivasyon sözleri ile kullanıcı etkileşimini artırmak, gelişmiş duygu rehberi ile duyguların anlamlarını öğrenebilmesi ve profil ekranındaki istatistiklerin geliştirilmesi ile kullanıcıya daha kapsamlı bir deneyim sunmaktır. Ayrıca arayüz karanlık tema ile modernize edilmiştir.
+
+---
+
+### 🎯 Sprint 3 Planlanan Puanlar
+Toplam hedef: **28 story points**
+
+## Sprint 3 — ~28 puan
+| Görev / Özellik                         | Story Points | Açıklama                                                                                  |
+|------------------------------------------|--------------|------------------------------------------------------------------------------------------|
+| Günlük detay görüntüleme ve düzenleme    | 5            | Kullanıcıların geçmiş günlüklerini detaylı görmesi ve düzenleyebilmesi                    |
+| Duygu takvimi entegrasyonu               | 5            | Takvim üzerinden hangi günlerde hangi duygu girildiğinin görüntülenmesi                   |
+| Motivasyon sözleri modülü                | 4            | Kullanıcıya her gün farklı motivasyon sözleri gösterilmesi                                |
+| Gelişmiş duygu rehberi                    | 4            | Duyguların anlamlarının ve etkilerinin kullanıcıya gösterilmesi                           |
+| Profil ekranı istatistik geliştirmeleri  | 5            | Ortalama ruh hali, en sık hissedilen duygu, toplam günlük sayısı                         |
+| Arayüz iyileştirmeleri ve karanlık tema | 5            | Profil sayfası ve takvim kısmı için UI düzenlemeleri                                     |
+
+---
+
+### 📅 Daily Scrum Süreci
+Bu sprintte yine bireysel geliştirme süreci takip edildi.  
+Her sabah Trello’daki **To Do** görevleri gözden geçirilerek günlük plan yapıldı.  
+Frontend tarafında arayüz iyileştirmeleri tamamlandıktan sonra backend API entegrasyonları yapıldı.  
+Tamamlanan görevler her gün **In Progress → Done** olarak güncellendi.
+
+---
+
+### 🔄 Sprint Board Güncellemeleri
+Trello sprint 3 panosu aşağıdaki başlıklarla oluşturulmuştur:
+
+- **Rejected**:Sprint 3'te tamamlamaktan vazgeçilen görevler
+- **Backlog**: Sprint 3’te planlanan yeni görevler    
+- **Done**: Tamamlanan işlevler (koda entegre edildi ve test edildi)  
+
+📌 Örnek **Sprint 3 Done User Stories**:
+- Kullanıcı geçmiş günlüklerini **detay modali** ile görüntüleyebiliyor
+- Günlükler **düzenlenip silinebiliyor**
+- Takvim üzerinden hangi günlerde hangi duygular girildiği görülebiliyor
+- Motivasyon sözleri **her gün ana sayfada** gösteriliyor
+- Profil ekranında **toplam günlük sayısı, ortalama ruh hali, en sık duygu bilgisi** görüntüleniyor
+- Arayüz **karanlık tema desteğiyle** geliştirildi
+
+---
+
+### 🖼️ Görsel: Trello Sprint Board 
+
+<img src="https://github.com/iremuslu/Bootcamp-AI209/blob/main/images/Sprint3/Sprint3.png" width="1000"/>
+
+---
+
+### ✅ Sprint Review
+Sprint sonunda hedeflenen tüm özellikler tamamlandı:
+- Günlük detay görüntüleme ekranı eklendi (**modal yapı ile**)  
+- Takvim üzerinden günlük geçmişi erişilebilir hale geldi  
+- Motivasyon sözleri modülü eklendi  
+- Profil ekranına **istatistik ve ortalama ruh hali** bilgileri eklendi  
+- Duygu rehberi ile tüm duyguların anlamları kullanıcıya sunuldu  
+- UI **karanlık tema ile modernize** edildi  
+
+---
+
+### 🔁 Sprint Retrospective
+
+#### Güçlü Yönler
+- Kullanıcı deneyimi tasarımı ciddi ölçüde iyileştirildi
+- Takvim ve günlük detay entegrasyonu kullanıcı deneyimini güçlendirdi
+- Motivasyon sözleri kullanıcı etkileşimini artırdı
+- Profil ekranındaki istatistikler kullanıcıya kendi gelişimini takip etme fırsatı verdi
+- Sesli giriş desteğiyle kullanıcı etkileşimi artırıldı
+- Veritabanı yapısı daha sürdürülebilir hale getirildi
+- Kullanıcı profili ile kişisel veriler ve geçmiş öneriler erişilebilir kılındı
+- Günlük metin girişleri artık veritabanına güvenli biçimde kaydediliyor ve daha sonra analiz edilebiliyor
+
+#### Geliştirilmesi Gerekenler
+- Tek geliştirici olarak tüm süreçleri yürütmek, bazı görevlerin zamanında tamamlanmasını zorlaştırabiliyor → Zaman yönetimi daha planlı yapılabilir
+- Sesli girişte bazı tarayıcılarda uyumsuzluklar gözlemlendi
+- Kullanıcı profil ekranı görsel olarak yeterince kişiselleştirilmiş değil, detaylandırılabilir
+- Motivasyon sözleri veri seti genişletilebilir
+- Takvimde filtreleme özellikleri (belirli duyguya göre arama) eklenebilir
+- Duygu rehberi daha interaktif hale getirilebilir
+- Gelecek sprintlerde bildirim sistemi ve gelişmiş kullanıcı takibi planlanmalı
+- Veritabanı yapısı SQLite olarak kalmaya devam ediyor → Canlı sistemler için PostgreSQL geçişi planlanmalı
+- Chatbot entegrasyonu ilerleyen aşamalara bırakıldı
+- Gelişmiş öneri sistemi ileriki versiyonlarda ele alınmalı
+
+---
+
+### 📌 Genel Kapanış & Sonuç
+3 sprint sonunda **Emotery uygulaması** şu duruma gelmiştir:
+
+**Temel İşlevler**  
+✅ Günlük ekleme, düzenleme, duygu analizi  
+✅ Grafik ile ruh hali takibi  
+✅ Takvim entegrasyonu  
+✅ Profil istatistikleri  
+✅ Motivasyon sözleri modülü  
+
+**UI/UX**  
+🎨 Modern ve responsive arayüz  
+🌙 Karanlık tema desteği eklendi  
+
+**Teknik Altyapı**  
+🗄️ SQLite üzerinde çalışıyor  
+➡️ PostgreSQL geçişi yapılmalı 
+
+**Eksikler / Sonraki Adımlar**  
+⚠️ Bildirim sistemi  
+⚠️ Chatbot entegrasyonu  
+⚠️ Daha gelişmiş öneri sistemi  
+➡️ Bu özellikler daha sonra geliştirilebilir.
+
+<details>
+<summary><strong>📎 Belgeler ve Ekler</strong></summary>
+
+#### 📸 Uygulama Arayüzü
+
+---
+
+##### 🔹 Ana Sayfa (Günlük Ekleme + Motivasyon Sözleri)  
+![Ana Sayfa](https://github.com/iremuslu/Bootcamp-AI209/blob/main/images/Sprint3/sayfa1.png)  
+
+**Açıklama:**  
+- Ana sayfa artık günlük ekleme alanına ek olarak **günlük motivasyon sözlerini** de göstermektedir.  
+- Motivasyon sözleri her gün yenilenir ve kullanıcıya olumlu bir başlangıç yapması için destek olur.  
+- **Yeni günlük**, **grafik butonu** ve **profil bağlantısı** korunarak modern bir tasarım sunulmuştur.
+  
+---
+
+##### 🔹 Profil Sayfası (İstatistikler + Duygu Rehberi + Takvim)  
+![Profil Sayfası](https://github.com/iremuslu/Bootcamp-AI209/blob/main/images/Sprint3/sayfa2.png)  
+
+**Açıklama:**  
+- Profil sayfası Sprint 3 ile **ortalama ruh hali**, **en sık hissedilen duygu** ve **toplam günlük sayısı** gibi istatistiklerle geliştirilmiştir.  
+- **Takvim entegrasyonu** ile kullanıcı hangi gün hangi duyguyu girdiğini görebilir.  
+- **Gelişmiş Duygu Rehberi** ile tüm duyguların anlamları ve etkileri kullanıcıya sunulmaktadır.  
+- Arayüz, karanlık tema ile daha profesyonel bir görünüm kazanmıştır.  
+
+---
+
+##### 🔹 Tüm Günlükler (Detay Görüntüleme & Düzenleme)  
+![Tüm Günlükler](https://github.com/iremuslu/Bootcamp-AI209/blob/main/images/Sprint3/sayfa4.png)  
+
+**Açıklama:**  
+- Kullanıcı artık tüm günlüklerini liste halinde görebilir.  
+- Her günlüğe tıklayarak **detay modalı** ile içeriğini inceleyebilir.  
+- Günlükler **düzenlenebilir veya silinebilir** hale gelmiştir.  
+- Düzenleme sonrası veritabanı otomatik güncellenir.  
+
+---
+
+##### 🔹 Motivasyon Sözleri Modülü  
+![Motivasyon Sözleri](https://github.com/iremuslu/Bootcamp-AI209/blob/main/images/Sprint3/sayfa5.png) 
+
+**Açıklama:**  
+- Her gün kullanıcıya rastgele seçilmiş bir motivasyon sözü gösterilir.  
+- Bu sözler veri tabanındaki hazır motivasyon listesi üzerinden çekilir.  
+
+---
+
+##### 🔹 Günlük Detayı Modal (Takvim Entegrasyonu ile)  
+![Günlük Detayı Modal](https://github.com/iremuslu/Bootcamp-AI209/blob/main/images/Sprint3/sayfa6.png) 
+
+**Açıklama:**  
+- Takvimden seçilen bir güne tıklandığında o güne ait tüm günlükler modal pencerede görüntülenebilir.  
+- Kullanıcı burada günlüğü **okuyabilir, düzenleyebilir veya silebilir**.  
+- Modal yapısı kullanıcı deneyimini artırmak için sade bir şekilde tasarlanmıştır.  
 
 </details>
+</details>
+
+## 🤖 Yapay Zeka Kullanımı
+
+Emotery uygulaması, kullanıcıların duygularını anlamlandırmasına ve kişiselleştirilmiş öneriler almasına yardımcı olmak için yapay zeka tabanlı doğal dil işleme (NLP) tekniklerinden yararlanmaktadır.
+
+### 📌 Kullanılan AI Bileşenleri
+
+- **Google Gemini 2.5 Pro (LangChain ChatGoogleGenerativeAI ile)**
+  - Kullanıcı günlük metinlerinden tek kelimelik **duygu etiketi** çıkarır.
+  - Empatik bir **yorum** üretir.
+  - Kullanıcıya uygun **3 kişiselleştirilmiş öneri** sunar.
+  
+- **SentenceTransformer (all-MiniLM-L6-v2)**
+  - Günlük metinlerini **vektör embedding**’lerine dönüştürerek benzer ruh halleri arasındaki ilişkileri tespit eder.
+  
+- **ChromaDB**
+  - AI tarafından üretilen embedding’ler **vektör veritabanında** saklanır.
+  - Geçmiş duygu kayıtlarına hızlı erişim ve öneri sisteminin gelecekte gelişmesi için altyapı sağlar.
+
+### 🔍 Çalışma Prensibi
+1. Kullanıcı bir günlük girdisi yazar veya sesli olarak ekler.  
+2. Metin **Gemini AI** ile analiz edilir:
+   - Tek kelimelik bir **duygu etiketi** belirlenir.
+   - Kısa bir **yorum** oluşturulur.
+   - Kullanıcıya uygulanabilir **3 öneri** üretilir.
+3. Bu bilgiler **profil, takvim ve istatistik ekranlarına** entegre edilir.
+
+### 🎯 AI Kullanım Amacı
+- Kullanıcıya **daha anlamlı geri bildirimler** sunmak.
+- Uzun vadede **kişiselleştirilmiş öneri sistemi** geliştirmek.
+- Duygu farkındalığını artırarak kullanıcı deneyimini güçlendirmek.
 
 ## 📝 Jüriye Not 
 
-Takım arkadaşlarımdan süreç boyunca geri dönüş alamadığım için projeyi tek başıma geliştiriyorum. Zaman kısıtları ve deneyim seviyem doğrultusunda Sprint 1’de uygulamanın temel işlevlerini (kullanıcı girişi, günlük girişi, duygu analizi ve öneri sistemi) yetiştirmeye odaklandım.
+Proje sürecinde takım arkadaşlarımdan süreç boyunca geri dönüş alamadığım için **geliştirmeleri tek başıma yürüttüm**. Bu durum zaman yönetimini daha kritik hale getirdi ve öncelikleri doğru belirlemeyi gerektirdi.  
 
-Temel akış başarıyla çalışmakta ancak öneri sistemi her zaman doğru ya da anlamlı çıktılar üretemeyebiliyor. Bu modül hâlâ geliştirme aşamasında ve ilerleyen sprintlerde iyileştirilecek. Zaman darlığı nedeniyle bazı ek özellikler Sprint 2’ye ertelendi.
+**Sprint 1**’de uygulamanın temel işlevleri (kullanıcı kayıt/girişi, günlük girişi, duygu analizi ve öneri sistemi) hayata geçirildi. Öneri sistemi temel haliyle çalışmakta ancak doğruluk oranı sonraki sprintlerde geliştirilmek üzere planlandı.  
 
-Genel olarak, Sprint 1 hedeflerime büyük ölçüde ulaştım ve uygulamanın ilk sürümünü çalışır hale getirmeyi başardım. Eksikleri önceliklendirerek sonraki sprintlerde tamamlamayı planlıyorum.
+**Sprint 2**’de kullanıcı deneyimini iyileştiren grafikler, sesli giriş ve profil sayfası eklendi. Veritabanı yapısı sürdürülebilir hale getirildi ancak canlı sistemler için PostgreSQL geçişi bir sonraki aşamaya bırakıldı.  
+
+**Sprint 3** ile birlikte takvim entegrasyonu, gelişmiş profil istatistikleri, motivasyon sözleri, duygu rehberi ve karanlık tema gibi kullanıcı deneyimini artıran özellikler başarıyla tamamlandı.  
+
+**Sonuç olarak** Emotery uygulaması;  
+✅ **Temel işlevleri tam çalışan, modern arayüze sahip** bir duygu takibi ve farkındalık platformu haline gelmiştir.  
+⚠️ **Geliştirme fırsatları**: Bildirim sistemi, chatbot entegrasyonu, gelişmiş öneri algoritmaları ve veri tabanı geçişi gibi alanlar ilerleyen sürümlerde ele alınacaktır.  
+
+---
 
