@@ -1,0 +1,203 @@
+/* === Genel Arkaplan ve Yazı Ayarları === */
+body {
+  background: linear-gradient(to bottom right, #C0C9EE, #A2AADB, #FFF2E0);
+  font-family: "Inter", sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  color: #333;
+}
+
+/* === Navbar Butonları === */
+.btn-nav {
+  background-color: #898AC4;
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+  display: inline-block;
+}
+
+.btn-nav:hover {
+  background-color: #6f70ad;
+}
+
+
+/* === Animasyonlar === */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.fade {
+  animation: fadeInUp 0.8s ease-out both;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.marquee-text {
+  white-space: nowrap;
+  animation: marquee 20s linear infinite;
+}
+
+/* === Form Kutuları === */
+.container {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+}
+
+.dashboard-box,
+.form-box {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  max-width: 600px;
+  width: 100%;
+  padding: 3rem;
+  backdrop-filter: blur(10px);
+}
+
+/* === Başlıklar ve Alt Başlıklar === */
+.dashboard-box h2,
+.form-box h2 {
+  font-weight: 600;
+  margin-top: 1rem;
+  color: #555;
+  text-align: center;
+}
+
+.dashboard-box p.subtitle {
+  background: rgba(137, 138, 196, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  color: #5554a3;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  text-align: center;
+}
+
+#message {
+  font-size: 0.95rem;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 25px;
+  color: #2f8f4e; /* mesaj için yeşil ton */
+}
+
+/* === Genel Butonlar === */
+.btn-emotery {
+  display: inline-block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(to right, #898AC4, #6f70ad);
+  transition: box-shadow 0.25s ease, transform 0.15s ease;
+  cursor: pointer;
+}
+
+.btn-emotery:hover {
+  box-shadow: 0 4px 16px rgba(137, 138, 196, 0.35);
+  transform: translateY(-2px);
+}
+
+/* === Form Alanları === */
+textarea.form-control,
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  resize: vertical;
+  min-height: 44px;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  background: #dbeeff;
+  border: 1.5px solid #aac8ff;
+  border-radius: 12px;
+  color: #1a2a6c;
+  transition: border-color 0.3s ease, background 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+textarea.form-control:focus,
+input:focus {
+  outline: none;
+  border-color: #5a86ff;
+  background: #e3f0ff;
+}
+
+/* === Günlük Özel === */
+.loading-spinner {
+  display: none;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.character-count {
+  text-align: right;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.diary-textarea {
+  min-height: 180px;
+  resize: vertical;
+}
+
+.quick-tips {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  padding: 25px;
+  margin-top: 30px;
+}
+
+.tips-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tip-item {
+  background: rgba(102, 126, 234, 0.1);
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border-left: 4px solid #667eea;
+}
+
+.tip-item:last-child {
+  margin-bottom: 0;
+}
+
+canvas {
+    background: rgba(255, 255, 255, 0.85); /* Hafif beyaz kutu */
+    border-radius: 16px; /* Köşeler yumuşasın */
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1); /* Hafif gölge */
+}
+

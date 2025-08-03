@@ -1,0 +1,14 @@
+# Python sanal ortam
+.venv/
+
+# Python cache klasörleri
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ortam değişkenleri
+.env
+
+# Log ve geçici dosyalar
+*.log

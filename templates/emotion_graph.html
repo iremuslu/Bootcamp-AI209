@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Duygu Grafiği - Emotery</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+        .dashboard-box {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px;
+            position: relative;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 500px !important;
+        }
+
+        .btn-nav {
+            background: #6c5ce7;
+            color: white !important;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 10px rgba(108, 92, 231, 0.3);
+            margin-top: 30px;
+        }
+        .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        /* Toggle alanı */
+        .legend-header {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0,0,0,0.3);
+            padding: 4px 8px;
+            border-radius: 6px;
+            color: white;
+            font-size: 12px;
+        }
+        .legend-toggle {
+            background: rgba(108, 92, 231, 0.9);
+            border: none;
+            color: white;
+            font-size: 14px;
+            padding: 4px 6px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .legend-toggle:hover {
+            background: rgba(108, 92, 231, 1);
+            transform: scale(1.1);
+        }
+
+        /* Legend Overlay */
+        .legend-overlay {
+            position: absolute;
+            top: 50px;
+            right: 15px;
+            background: rgba(0,0,0,0.55);
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            color: white;
+            max-width: 170px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .legend-overlay.open {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 4px;
+        }
+        .legend-badge {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            color: white;
+            font-size: 9px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div class="dashboard-box">
+        <h2 class="text-center">📊 Duygu Değişim Grafiği</h2>
+
+        <!-- Toggle + Başlık -->
+        <div class="legend-header">
+            <span>🎨 Duygu Renkleri</span>
+            <button class="legend-toggle" onclick="toggleLegend()">▼</button>
+        </div>
+
+        <!-- Açılır/Kapanır Legend -->
+        <div class="legend-overlay" id="legend-content"></div>
+
+        <canvas id="emotionChart"></canvas>
+
+        <div class="text-center mt-4">
+            <a class="btn-nav" href="/dashboard">⬅ Geri Dön</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    const data = {{ data | tojson }};
+    const labels = data.map(item => item.label);
+    const scores = data.map(item => item.score);
+    const emotions = data.map(item => `${item.emoji} ${item.emotion}`);
+
+    const colors = {
+        1: '#a83232',  2: '#b84e3b',  3: '#c47442',  4: '#cc9659',
+        5: '#d1b25c',  6: '#e2cf60',  7: '#b3d665',  8: '#81d676',
+        9: '#4dc49f', 10: '#45a7c8', 11: '#5e7dd4', 12: '#9c27b0',
+        13: '#607d8b',14: '#795548', 15: '#ff7043', 16: '#880e4f'
+    };
+
+    const emotionNames = {
+        1: "😢 Üzgün",      2: "😞 Kederli",   3: "😟 Endişeli", 4: "😔 Yalnız",
+        5: "😕 Kararsız",   6: "😒 Sıkılmış",  7: "😴 Yorgun",   8: "😐 Nötr",
+        9: "😌 Huzurlu",   10: "😊 Mutlu",    11: "😄 Heyecanlı",12: "😫 Bunalmış",
+        13: "😶 Mesafeli", 14: "😩 Çaresiz",  15: "😔 Kırgın",  16: "😖 Sıkışmış"
+    };
+
+    const pointColors = scores.map(score => colors[score] || '#6f70ad');
+
+    const ctx = document.getElementById('emotionChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Duygu Değeri',
+                data: scores,
+                borderColor: '#8884d8',
+                backgroundColor: 'rgba(137, 138, 196, 0.2)',
+                pointBackgroundColor: pointColors,
+                pointBorderColor: '#fff',
+                pointHoverRadius: 10,
+                pointRadius: 6,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: false,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            const i = context.dataIndex;
+                            return `Duygu: ${emotions[i]}`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    min: 1,
+                    max: 16,
+                    ticks: {
+                        stepSize: 1,
+                        callback: function (value) {
+                            return emotionNames[value] || value;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Legend render
+    const legendContainer = document.getElementById('legend-content');
+    Object.keys(emotionNames).forEach(score => {
+        const item = document.createElement('div');
+        item.classList.add('legend-item');
+        item.innerHTML = `
+            <span class="legend-badge" style="background:${colors[score]}">${score}</span>
+            <span>${emotionNames[score]}</span>
+        `;
+        legendContainer.appendChild(item);
+    });
+
+    // Toggle
+    function toggleLegend() {
+        document.getElementById('legend-content').classList.toggle('open');
+    }
+</script>
+</body>
+</html>

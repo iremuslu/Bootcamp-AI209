@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Emotery</title>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/static/css/styles.css" />
+
+</head>
+<body class="min-h-screen flex flex-col scroll-smooth bg-gradient-to-br from-[#C0C9EE] via-[#A2AADB] to-[#FFF2E0] text-gray-800">
+  <!-- ================= NAVBAR ================= -->
+  <header class="w-full sticky top-0 z-30 bg-[#FFF2E0]/70 backdrop-blur-sm shadow-sm fade">
+    <nav class="max-w-7xl mx-auto flex items-center justify-between py-4 px-6 md:px-10">
+      <h1 class="text-2xl font-extrabold text-[#898AC4] select-none">Emotery</h1>
+      <div class="hidden md:flex items-center space-x-3 font-medium">
+        <a href="/login" class="btn-nav">Giriş Yap</a>
+        <a href="/register" class="btn-nav">Kayıt Ol</a>
+      </div>
+
+      <button id="menuBtn" class="md:hidden text-3xl text-[#898AC4]" aria-label="Menüyü Aç/Kapat">☰</button>
+    </nav>
+    <div id="mobileMenu" class="md:hidden hidden flex-col space-y-3 pb-4 px-6 font-medium bg-[#FFF2E0]/90 backdrop-blur-sm">
+      <a href="/login" class="hover:text-[#898AC4] transition">Giriş Yap</a>
+      <a href="/register" class="bg-[#898AC4] hover:bg-[#6f70ad] text-white py-2 px-4 rounded-full text-center transition">Kayıt Ol</a>
+    </div>
+  </header>
+
+  <!-- ========== MARQUEE BANNER ========== -->
+  <div class="overflow-hidden bg-[#C0C9EE]/60 py-2 backdrop-blur-sm fade">
+    <p class="marquee-text text-center text-[#898AC4] font-medium text-sm md:text-base">
+      🎧 Sesli günlükle kendini ifade et • 😊 Ruh hali analiziyle iç dünyanı keşfet • 💡 Kişiselleştirilmiş önerilerle iyi hisset •
+    </p>
+  </div>
+
+  <!-- ================= HERO ================= -->
+  <section class="max-w-7xl mx-auto w-full px-6 md:px-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center py-16 md:py-24 flex-1 fade" id="hero">
+    <div class="flex flex-col items-center lg:items-start text-center lg:text-left space-y-6 order-2 lg:order-1">
+      <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#898AC4] leading-tight drop-shadow-sm">
+        Bugün nasıl hissediyorsun?
+      </h2>
+      <p class="text-base sm:text-lg md:text-xl max-w-md">
+        Emotery ile duygularını kolayca kaydet, yapay zeka analizine bırak ve iç huzura bir adım daha yaklaş.
+      </p>
+      <a href="/login" class="inline-block bg-[#898AC4] hover:bg-[#6f70ad] text-white py-3 px-8 rounded-full font-medium transition">
+        Günlük Başlat
+      </a>
+    </div>
+    <div class="flex justify-center lg:justify-end order-1 lg:order-2">
+    <div class="rounded-3xl overflow-hidden shadow-2xl ring-4 ring-[#A2AADB]/30">
+        <img src="static/pics/girl.png" alt="Meditasyon yapan kadın" class="w-64 sm:w-80 md:w-[26rem] h-auto object-cover select-none" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FEATURES ================= -->
+  <section id="features" class="max-w-5xl mx-auto w-full px-6 md:px-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pb-20 fade">
+    <div class="bg-white/70 rounded-2xl p-6 shadow-lg flex items-start space-x-4 transform transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer">
+      <span class="text-4xl select-none">🎙️</span>
+      <div>
+        <h3 class="font-semibold text-lg md:text-xl text-[#898AC4]">Sesli Günlük</h3>
+        <p>Duygularını sesinle kaydet.</p>
+      </div>
+    </div>
+    <div class="bg-white/70 rounded-2xl p-6 shadow-lg flex items-start space-x-4 transform transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer">
+      <span class="text-4xl select-none">😊</span>
+      <div>
+        <h3 class="font-semibold text-lg md:text-xl text-[#898AC4]">Ruh Hali Analizi</h3>
+        <p>Duygusal eğilimlerini otomatik analiz et.</p>
+      </div>
+    </div>
+    <div class="bg-white/70 rounded-2xl p-6 shadow-lg flex items-start space-x-4 transform transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer">
+      <span class="text-4xl select-none">💡</span>
+      <div>
+        <h3 class="font-semibold text-lg md:text-xl text-[#898AC4]">Kişisel Öneriler</h3>
+        <p>Destekleyici tavsiyeler al.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="w-full text-center py-6 bg-[#FFF2E0]/70 backdrop-blur-sm text-sm text-[#898AC4] fade">
+    © 2025 Emotery
+  </footer>
+
+  <script>
+    const btn = document.getElementById('menuBtn');
+    const menu = document.getElementById('mobileMenu');
+    btn?.addEventListener('click', () => menu?.classList.toggle('hidden'));
+  </script>
+</body>
+</html>

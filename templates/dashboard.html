@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Dashboard - Emotery</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/css/dashboard.css" />
+</head>
+<body>
+
+<!-- 🌐 TOP NAVIGATION -->
+<header class="top-nav">
+  <div class="logo">
+    <a href="/dashboard">
+      <img src="/static/pics/logo.png" alt="Emotery Logo" class="logo-img">
+      <span class="logo-text">Emotery</span>
+    </a>
+  </div>
+
+  <div class="right-section">
+    <!-- Tek profil butonu (yuvarlak) -->
+    <div class="profile-dropdown">
+      <button class="profile-btn" id="profileToggle">
+        {{ username[0].upper() }}
+      </button>
+      <ul class="dropdown-menu" id="profileMenu">
+        <li>
+          <a href="/profile">👤 Profil</a>
+        </li>
+        <li>
+          <a class="logout" href="/logout">🚪 Çıkış</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<div class="dashboard-container">
+  <!-- Üst Karşılama Kartı -->
+  <div class="welcome-card">
+    <div>
+      <h2>Merhaba {{ username }}! 👋</h2>
+      <p>Bugün nasıl hissediyorsunuz? Duygularınızı keşfetmeye hazır mısınız?</p>
+    </div>
+    <div class="today-date">
+      <span class="label">Bugün</span>
+      <span class="date" id="todayDate"></span>
+    </div>
+  </div>
+
+  <!-- Orta Kısım 3 Kart -->
+  <div class="card-grid">
+    <div class="card">
+      <h3>✏️ Günlük Yaz</h3>
+      <p>Duygularınızı yazarak iç dünyanızı keşfedin ve AI destekli analiz alın.</p>
+      <a href="/journal">
+          <button class="btn-primary">+ Yeni Günlük</button>
+      </a>
+    </div>
+
+    <div class="card">
+      <h3>📊 Duygu Takibi</h3>
+      <p>Zamanla duygu değişimlerinizi grafiklerle görselleştirin ve desenler keşfedin.</p>
+      <a href="/emotion-graph">
+        <button class="btn-primary btn-green">📈 Grafiği Gör</button>
+      </a>
+    </div>
+
+    <div class="card">
+      <h3>👤 Profil & İstatistikler</h3>
+      <p>Kişisel gelişim yolculuğunuzu detaylı istatistiklerle takip edin.</p>
+      <a href="/profile">
+        <button class="btn-primary btn-cyan">👤 Profilim</button>
+      </a>
+    </div>
+  </div>
+
+<!-- Son Günlük Kayıtları -->
+<div class="logs-card">
+  <div class="logs-header">
+    <div>
+      <span>🕒 Son Günlük Kayıtlarınız</span>
+      <small class="text-muted ms-2">{{ recent_entries|length }} kayıt</small>
+    </div>
+    <a href="/all-entries">
+      <button class="btn-outline">Tüm Kayıtları Gör</button>
+    </a>
+  </div>
+
+  {% set emotion_map = {
+    "Üzgün": {"emoji": "😢", "color": "#a83232"},
+    "Kederli": {"emoji": "😞", "color": "#b84e3b"},
+    "Endişeli": {"emoji": "😟", "color": "#c47442"},
+    "Yalnız": {"emoji": "😔", "color": "#cc9659"},
+    "Kararsız": {"emoji": "😕", "color": "#d1b25c"},
+    "Sıkılmış": {"emoji": "😒", "color": "#e2cf60"},
+    "Yorgun": {"emoji": "😴", "color": "#b3d665"},
+    "Nötr": {"emoji": "😐", "color": "#81d676"},
+    "Huzurlu": {"emoji": "😌", "color": "#4dc49f"},
+    "Mutlu": {"emoji": "😊", "color": "#45a7c8"},
+    "Heyecanlı": {"emoji": "😄", "color": "#5e7dd4"},
+    "Bunalmış": {"emoji": "😫", "color": "#9c27b0"},
+    "Mesafeli": {"emoji": "😶", "color": "#607d8b"},
+    "Çaresiz": {"emoji": "😩", "color": "#795548"},
+    "Kırgın": {"emoji": "😔", "color": "#ff7043"},
+    "Sıkışmış": {"emoji": "😖", "color": "#880e4f"}
+  } %}
+
+  <div class="recent-entries-grid">
+    {% if recent_entries %}
+      {% for entry in recent_entries %}
+        <div class="recent-entry-item">
+          <span class="entry-badge" style="background-color: {{ emotion_map.get(entry.emotion, {'color': '#6b7280'}).color }};">
+            {{ emotion_map.get(entry.emotion, {'emoji': '❓'}).emoji }} {{ entry.emotion }}
+          </span>
+          <div class="entry-content">
+            {{ entry.content[:80] }}{% if entry.content|length > 80 %}...{% endif %}
+          </div>
+          <div class="entry-date">{{ entry.date }}</div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="recent-entry-item" style="justify-content: center;">
+        <p class="text-muted m-0">Henüz günlük kaydı yok.</p>
+      </div>
+    {% endif %}
+  </div>
+  </div>
+
+  <!-- Günlük Motivasyon Sözleri -->
+  <div class="motivational-section">
+    <div class="motivational-card">
+      <div class="motivational-header">
+        <h4>💫 Günün Motivasyon Sözleri</h4>
+        <p>Size ilham verecek özel seçilmiş sözler</p>
+      </div>
+
+      <div class="motivational-quotes" id="motivationalQuotes">
+        <!-- Quotes will be loaded here by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Motivational quotes database
+  const motivationalQuotes = [
+    {
+      text: "Hayattaki en büyük zaferler, hiç düşmemekten değil, her düştüğümüzde ayağa kalkmaktan gelir.",
+      author: "Nelson Mandela",
+      icon: "🌟"
+    },
+    {
+      text: "Mutluluk hazır bir şey değildir. Kendi eylemlerinizden doğar.",
+      author: "Dalai Lama",
+      icon: "😊"
+    },
+    {
+      text: "Bugün yapabileceğin en iyi şey, dünün hatalarından ders çıkarmak ve yarın için umutlu olmaktır.",
+      author: "Maya Angelou",
+      icon: "🌅"
+    },
+    {
+      text: "İç huzurunuz, dış koşullarınızdan daha önemlidir.",
+      author: "Epiktetos",
+      icon: "🧘‍♀️"
+    },
+    {
+      text: "Her yeni gün, yeni bir başlangıç ve yeni umutlar getirir.",
+      author: "Emily Dickinson",
+      icon: "🌈"
+    },
+    {
+      text: "Duygularınızı kontrol edemezsiniz, ama onlara nasıl tepki vereceğinizi seçebilirsiniz.",
+      author: "Viktor Frankl",
+      icon: "💪"
+    },
+    {
+      text: "Kendine karşı nazik ol. Sen de gelişmeye devam eden bir insansın.",
+      author: "Unknown",
+      icon: "🌱"
+    },
+    {
+      text: "Bazen en büyük cesaret, yarın tekrar denemeye karar vermektir.",
+      author: "Unknown",
+      icon: "🦋"
+    },
+    {
+      text: "Minnettar bir kalp, mutluluğun anahtarıdır.",
+      author: "Unknown",
+      icon: "🙏"
+    },
+    {
+      text: "Her düşünceniz, bugününüzü şekillendirir. Pozitif düşünmeyi seçin.",
+      author: "Unknown",
+      icon: "✨"
+    },
+    {
+      text: "Zorluklarınız, gücünüzü keşfetmeniz için fırsatlardır.",
+      author: "Unknown",
+      icon: "💎"
+    },
+    {
+      text: "Küçük adımlar da sizi hedefinize götürür. Sabırlı olun.",
+      author: "Lao Tzu",
+      icon: "🚶‍♀️"
+    }
+  ];
+
+  function getRandomQuotes(count = 3) {
+    const shuffled = [...motivationalQuotes].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  }
+
+  function displayMotivationalQuotes() {
+    const quotesContainer = document.getElementById('motivationalQuotes');
+    const dailyQuotes = getRandomQuotes(3);
+
+    quotesContainer.innerHTML = dailyQuotes.map(quote => `
+      <div class="quote-item">
+        <span class="quote-icon">${quote.icon}</span>
+        <div class="quote-text">${quote.text}</div>
+        <div class="quote-author">— ${quote.author}</div>
+      </div>
+    `).join('');
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const todayElement = document.getElementById("todayDate");
+
+    const today = new Date();
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+
+    todayElement.textContent = today.toLocaleDateString("tr-TR", options);
+
+    // Load motivational quotes
+    displayMotivationalQuotes();
+  });
+
+  // Dropdown menüsü toggle
+  document.getElementById("profileToggle").addEventListener("click", () => {
+    const menu = document.getElementById("profileMenu");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+  });
+
+  // Menü dışına tıklayınca kapat
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".profile-dropdown")) {
+      document.getElementById("profileMenu").style.display = "none";
+    }
+  });
+
+  // Quick Actions Functions
+  async function openQuickNote() {
+    const note = prompt("Hızlı notunuzu yazın:");
+    if (note && note.trim()) {
+      try {
+        const response = await fetch('/api/quick-note', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            content: note,
+            emotion: 'Nötr'
+          })
+        });
+
+        if (response.ok) {
+          alert('Not başarıyla kaydedildi!');
+          location.reload(); // Refresh to show new entry
+        } else {
+          alert('Not kaydedilirken hata oluştu.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Bağlantı hatası oluştu.');
+      }
+    }
+  }
+
+  async function setDailyGoal() {
+    const emotions = ['Mutlu', 'Huzurlu', 'Enerjik', 'Odaklanmış', 'Minnettar', 'Sakin'];
+    const selectedEmotion = prompt(`Bugünkü hedef duygunuzu seçin:\n${emotions.join(', ')}`);
+
+    if (selectedEmotion && emotions.includes(selectedEmotion)) {
+      try {
+        const response = await fetch('/api/daily-goal', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            target_emotion: selectedEmotion,
+            notes: `Bugünkü hedef: ${selectedEmotion} hissetmek`
+          })
+        });
+
+        if (response.ok) {
+          alert(`Günlük hedefiniz "${selectedEmotion}" olarak belirlendi!`);
+        } else {
+          alert('Hedef belirlenirken hata oluştu.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Bağlantı hatası oluştu.');
+      }
+    }
+  }
+
+  async function startBreathingExercise() {
+    if (confirm('5 dakikalık nefes egzersizi başlatılsın mı?')) {
+      // Simple breathing exercise simulation
+      let countdown = 5 * 60; // 5 minutes in seconds
+      const interval = setInterval(() => {
+        countdown--;
+        if (countdown <= 0) {
+          clearInterval(interval);
+          completeBreathingSession();
+        }
+      }, 1000);
+
+      alert('Nefes egzersizi başladı! 5 dakika boyunca derin nefes alıp verin.');
+    }
+  }
+
+  async function completeBreathingSession() {
+    try {
+      const response = await fetch('/api/breathing-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          duration: 5
+        })
+      });
+
+      if (response.ok) {
+        alert('Tebrikler! Nefes egzersizini tamamladınız. 🧘‍♀️');
+      }
+    } catch (error) {
+      console.error('Error logging breathing session:', error);
+    }
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Duygu Analizi - Emotery</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            color: white;
+            text-decoration: none;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+        }
+
+        .logout-btn:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(220, 53, 69, 0.4);
+        }
+
+        .analysis-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            color: #666;
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .diary-textarea {
+            width: 100%;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 25px;
+            font-size: 1.1rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 200px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .diary-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+            background: white;
+        }
+
+        .diary-textarea::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            padding: 18px 50px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            display: block;
+            margin: 0 auto;
+            width: fit-content;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 20px;
+            border-left: 5px solid #667eea;
+            display: none;
+        }
+
+        .result-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .emotion-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .emotion-badge {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .quick-tips {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        .tips-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tip-item {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .tip-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .character-count {
+            text-align: right;
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .analysis-card {
+                padding: 25px 20px;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .header-nav {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+
+            .back-btn, .logout-btn {
+                text-align: center;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Üst Navigasyon -->
+        <div class="header-nav">
+            <a href="/dashboard" class="back-btn">
+                ← Ana Sayfaya Dön
+            </a>
+            <button type="button" class="logout-btn" onclick="logout()">
+                🚪 Çıkış Yap
+            </button>
+        </div>
+
+        <!-- Ana Analiz Kartı -->
+        <div class="analysis-card">
+            <h1 class="page-title">🔍 Duygu Analizi</h1>
+            <p class="page-subtitle">
+                Duygularınızı ve düşüncelerinizi yazın, size özel bir analiz hazırlayalım.
+                Ne kadar detaylı yazarsanız, analiz o kadar doğru olacaktır.
+            </p>
+
+            <form id="analysisForm" action="/diary" method="post">
+                <input type="hidden" name="user_id" value="{{ user_id }}">
+                <input type="hidden" name="username" value="{{ username }}">
+
+                <div class="form-group">
+                    <label for="content" class="form-label">📝 Bugün neler hissettiniz?</label>
+                    <textarea
+                        id="content"
+                        name="content"
+                        class="diary-textarea"
+                        placeholder="Bugün yaşadığınız deneyimleri, hissettiklerinizi, düşüncelerinizi detaylı bir şekilde yazın. Örneğin:
+
+• Sabah nasıl uyandınız?
+• Gün içinde hangi olaylar sizi etkiledi?
+• Hangi duygular ağır bastı?
+• Neler sizi mutlu etti veya üzdü?
+• Gelecek hakkında neler düşünüyorsunuz?
+
+Kendinizi ifade etmekten çekinmeyin, burada güvendesiniz."
+                        required
+                        maxlength="2000"
+                        oninput="updateCharacterCount()"
+                    ></textarea>
+                    <div class="character-count">
+                        <span id="charCount">0</span>/2000 karakter
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    ✨ Duygularımı Analiz Et
+                </button>
+
+                <div class="loading-spinner" id="loadingSpinner">
+                    <div class="spinner"></div>
+                    <p style="margin-top: 15px; color: #666;">Analiz ediliyor, lütfen bekleyin...</p>
+                </div>
+            </form>
+
+            <!-- Sonuç Bölümü -->
+            <div id="resultSection" class="result-section">
+                <div class="result-title">
+                    🎯 Analiz Sonuçları
+                </div>
+                <div id="analysisResult"></div>
+            </div>
+
+            <!-- Hızlı İpuçları -->
+            <div class="quick-tips">
+                <div class="tips-title">
+                    💡 Daha İyi Analiz İçin İpuçları
+                </div>
+                <div class="tip-item">
+                    <strong>Detaylı olun:</strong> Ne kadar çok detay verirseniz, analiz o kadar doğru olur.
+                </div>
+                <div class="tip-item">
+                    <strong>Duygularınızı adlandırın:</strong> "Mutlu", "üzgün", "endişeli" gibi duygu kelimelerini kullanın.
+                </div>
+                <div class="tip-item">
+                    <strong>Sebepleri açıklayın:</strong> Neden böyle hissettiğinizi yazın.
+                </div>
+                <div class="tip-item">
+                    <strong>Dürüst olun:</strong> Gerçek duygularınızı saklamayın, burada güvendesiniz.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateCharacterCount() {
+            const textarea = document.getElementById('content');
+            const charCount = document.getElementById('charCount');
+            const count = textarea.value.length;
+            charCount.textContent = count;
+
+            // Karakter sınırına yaklaşırken renk değiştir
+            if (count > 1800) {
+                charCount.style.color = '#dc3545';
+            } else if (count > 1500) {
+                charCount.style.color = '#ffc107';
+            } else {
+                charCount.style.color = '#666';
+            }
+        }
+
+        function logout() {
+            if (confirm('Çıkış yapmak istediğinizden emin misiniz?')) {
+                window.location.href = '/';
+            }
+        }
+
+        // Form submit işlemi
+        document.getElementById('analysisForm').addEventListener('submit', function(e) {
+            const submitBtn = document.getElementById('submitBtn');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const textarea = document.getElementById('content');
+
+            // Minimum karakter kontrolü
+            if (textarea.value.trim().length < 10) {
+                e.preventDefault();
+                alert('Lütfen daha detaylı bir açıklama yazın (en az 10 karakter).');
+                return;
+            }
+
+            // Loading durumu
+            submitBtn.style.display = 'none';
+            loadingSpinner.style.display = 'block';
+
+            // Form submit edildikten sonra sonuç bölümünü göster
+            setTimeout(() => {
+                document.getElementById('resultSection').style.display = 'block';
+                document.getElementById('resultSection').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }, 1000);
+        });
+
+        // Sayfa yüklendiğinde animasyon
+        document.addEventListener('DOMContentLoaded', function() {
+            const card = document.querySelector('.analysis-card');
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(50px)';
+
+            setTimeout(() => {
+                card.style.transition = 'all 0.8s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 100);
+
+            // Textarea'ya odaklan
+            document.getElementById('content').focus();
+        });
+
+        // Otomatik boyutlandırma
+        document.getElementById('content').addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.max(200, this.scrollHeight) + 'px';
+        });
+    </script>
+
+    <!-- JS dosyaları -->
+    <script src="/static/js/diary_form.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Emotery - Giriş Yap</title>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+
+<body class="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-[#C0C9EE] via-[#A2AADB] to-[#FFF2E0] text-gray-800 px-4">
+  <div class="w-full max-w-md bg-white/80 p-8 rounded-3xl shadow-xl fade">
+    <h2 class="text-3xl font-extrabold text-center text-[#898AC4] mb-6">Giriş Yap</h2>
+    <form method="POST" action="/login" class="space-y-6">
+      <div>
+        <label for="username" class="block text-sm font-medium text-gray-700">Kullanıcı Adı</label>
+        <input type="text" name="username" id="username" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#898AC4] focus:border-[#898AC4]" />
+      </div>
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Şifre</label>
+        <input type="password" name="password" id="password" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#898AC4] focus:border-[#898AC4]" />
+      </div>
+      {% if error %}
+        <p class="text-red-600 text-sm text-center">{{ error }}</p>
+      {% endif %}
+      <button type="submit" class="w-full bg-[#898AC4] hover:bg-[#6f70ad] text-white py-2 rounded-full font-medium transition">Giriş Yap</button>
+    </form>
+    <p class="mt-6 text-sm text-center">
+      Henüz hesabın yok mu? <a href="/register" class="text-[#898AC4] hover:underline">Kayıt Ol</a>
+    </p>
+  </div>
+</body>
+
+</html>

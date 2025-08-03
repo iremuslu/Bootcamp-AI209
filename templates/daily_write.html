@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Günlük Yaz - Emotery</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+<body>
+<div class="journal-container">
+    <!-- Header -->
+    <div class="journal-header">
+        <div class="back-button" onclick="window.location.href='/dashboard?user_id={{ user_id }}&username={{ username }}'">
+            ←
+        </div>
+        <img src="/static/pics/logoAI.png" alt="Emotery Logo" class="journal-logo">
+        <div></div> <!-- Spacer for flexbox -->
+    </div>
+
+    <div class="journal-card">
+        <h2 class="journal-title">Merhaba {{ username }}! 👋</h2>
+        <p class="journal-subtitle">Bugün neler hissettiniz? Duygularınızı bizimle paylaşın</p>
+
+        <!-- Mood Selection -->
+        <div class="mood-tabs">
+            <button class="mood-tab active" data-tab="profile">👤 Profilim</button>
+            <button class="mood-tab" data-tab="emotion">📊 Duygu Grafiğini Gör</button>
+        </div>
+
+        <!-- Journal Form -->
+        <form id="diaryForm" action="/diary" method="post">
+            <input type="hidden" name="user_id" value="{{ user_id }}">
+
+            <div class="journal-input-section">
+                <label class="journal-label">Bugün nasılsın?</label>
+                <textarea
+                    name="content"
+                    class="journal-textarea"
+                    placeholder="Bugün nasıl hissediyorsun? Duygularını, düşüncelerini veya yaşadığın deneyimleri burada paylaş..."
+                    required
+                ></textarea>
+            </div>
+
+            <button type="submit" class="btn-save-journal">
+                📝 Günlüğü Kaydet
+            </button>
+        </form>
+
+        <!-- Voice Recording Button -->
+        <button id="micButton" class="btn-voice-record">
+            🎤 Sesli Günlük Başlat
+        </button>
+
+        <!-- Mood Analysis Result -->
+        <div id="result" class="analysis-result"></div>
+
+        <!-- Mood Tips Section -->
+        <div class="mood-tips" id="moodTips">
+            <div class="tip-header">Günlüğünüz kaydedildi</div>
+            <div class="tip-content">
+                <div class="tip-item">
+                    <span class="tip-emoji">🟢</span>
+                    <span class="tip-label">Duygu:</span>
+                    <span class="tip-text">Yükselmiş</span>
+                </div>
+                <div class="tip-item">
+                    <span class="tip-emoji">⚠️</span>
+                    <span class="tip-label">Yorum:</span>
+                    <span class="tip-text">Bu hissin ne kadar ağır ve yıkıcı olabileceğini anlıyorum. Bazen ömrümüzde yık gerçekten ağır gelişebilir.</span>
+                </div>
+                <div class="tip-item">
+                    <span class="tip-emoji">✅</span>
+                    <span class="tip-label">Öneriler:</span>
+                    <div class="tip-suggestions">
+                        Kendine 15-20 dakikalık kısa bir mola izin ver. Bu süre sadece uzanabilir, gözlerini kapatabilir veya sessizce oturabilirsiin. Seni rahatlatacak bir şey için papatyali çayı gibi bitkî çayını veya sıcak bir bardak tilt su, nem bereketinin hep de zihimi sakinleştirmeye yardımcı olabilir. Telefonunu veya bilgisayarını bu süreliğine uzaşına koy. Zihimi dinlendirmek için teknolojiye kısa bir ara vermek bile fark yaratabilir.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Journal Button -->
+        <button class="btn-start-journal" id="startJournalBtn">
+            🎵 Sesli Günlük Başlat
+        </button>
+    </div>
+</div>
+
+<script>
+// Tab switching functionality
+document.querySelectorAll('.mood-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+        document.querySelectorAll('.mood-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+    });
+});
+
+// Form submission with AJAX
+document.getElementById('diaryForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+    const resultDiv = document.getElementById('result');
+    const moodTips = document.getElementById('moodTips');
+
+    resultDiv.innerHTML = '';
+
+    try {
+        const response = await fetch(form.action, {
+            method: form.method,
+            body: formData
+        });
+
+        if (!response.ok) throw new Error('Sunucu hatası!');
+
+        const data = await response.json();
+
+        // Show success message
+        resultDiv.innerHTML = `
+            <div class="success-message">
+                <div class="success-icon">✅</div>
+                <div class="success-text">Günlüğünüz başarıyla kaydedildi!</div>
+            </div>
+        `;
+
+        // Update mood tips with real data
+        const tipContent = moodTips.querySelector('.tip-content');
+        tipContent.innerHTML = `
+            <div class="tip-item">
+                <span class="tip-emoji">🟢</span>
+                <span class="tip-label">Duygu:</span>
+                <span class="tip-text">${data.sentiment}</span>
+            </div>
+            <div class="tip-item">
+                <span class="tip-emoji">💭</span>
+                <span class="tip-label">Yorum:</span>
+                <span class="tip-text">${data.comment}</span>
+            </div>
+            ${data.suggestions ? `
+            <div class="tip-item">
+                <span class="tip-emoji">✅</span>
+                <span class="tip-label">Öneriler:</span>
+                <div class="tip-suggestions">${data.suggestions}</div>
+            </div>
+            ` : ''}
+        `;
+
+        moodTips.style.display = 'block';
+        form.reset();
+
+    } catch (error) {
+        resultDiv.innerHTML = `
+            <div class="error-message">
+                <div class="error-icon">❌</div>
+                <div class="error-text">Bir hata oluştu: ${error.message}</div>
+            </div>
+        `;
+    }
+});
+
+// Voice recording functionality
+const micButton = document.getElementById("micButton");
+const contentInput = document.querySelector("textarea[name='content']");
+let recognition;
+if ("webkitSpeechRecognition" in window) {
+    recognition = new webkitSpeechRecognition();
+    recognition.continuous = false;
+    recognition.lang = "tr-TR";
+
+    recognition.onresult = function (event) {
+        const transcript = event.results[0][0].transcript;
+        contentInput.value += transcript + " ";
+    };
+
+    recognition.onerror = function (event) {
+        alert("🎤 Ses algılanamadı: " + event.error);
+    };
+
+    recognition.onend = function () {
+        micButton.textContent = "🎤 Sesli Günlük Başlat";
+        micButton.classList.remove('recording');
+    };
+} else {
+    micButton.style.display = 'none';
+}
+
+micButton.addEventListener("click", () => {
+    if (recognition) {
+        recognition.start();
+        micButton.textContent = "🛑 Dinleniyor...";
+        micButton.classList.add('recording');
+    }
+});
+
+// Initially hide mood tips
+document.getElementById('moodTips').style.display = 'none';
+</script>
+</body>
+</html>

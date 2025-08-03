@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+sqlalchemy
+jinja2
+alembic
+passlib[bcrypt]
+python-jose[cryptography]
+python-multipart
+python-dotenv
+langchain
+langchain-google-genai
+google-generativeai
+sentence-transformers
+chromadb

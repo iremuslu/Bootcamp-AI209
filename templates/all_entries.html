@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tüm Günlükler</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* AI Kart Tasarımı */
+        .ai-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(240,243,255,0.95));
+            border-left: 4px solid #4a6cf7;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-top: 10px;
+            padding: 12px;
+            border-radius: 12px;
+        }
+        .ai-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
+        .ai-header {
+            font-size: 1rem;
+            color: #4a6cf7;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+        }
+        .ai-icon {
+            font-size: 1.4rem;
+            margin-right: 8px;
+        }
+        .ai-content {
+            font-size: 0.95rem;
+            color: #333;
+            margin-top: 5px;
+        }
+
+        /* Anasayfa Butonu */
+        .home-btn {
+            background-color: #6c72e6;
+            border: none;
+            color: white;
+            font-weight: 500;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: background 0.2s ease;
+        }
+        .home-btn:hover {
+            background-color: #5a60d4;
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+<div class="container mt-4">
+    <h3 class="mb-4 text-center">📜 Tüm Günlükler</h3>
+
+    {% if entries %}
+        <div class="list-group">
+            {% for entry in entries %}
+                <div class="list-group-item mb-3 p-3 rounded shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="mb-0">
+                            {{ emotion_map.get(entry.emotion, {'emoji': '❓'}).emoji }}
+                            {{ entry.emotion }}
+                        </h5>
+                        <small class="text-muted">{{ entry.date }}</small>
+                    </div>
+
+                    <p>{{ entry.content }}</p>
+
+                    {% if entry.comment or entry.suggestions %}
+                    <!-- AI Kart -->
+                    <div class="ai-card">
+                        <div class="ai-header">
+                            <span class="ai-icon">🤖</span> AI Analizi
+                        </div>
+                        <div class="ai-content">
+                            {% if entry.comment %}
+                                <p class="mb-2"><strong>💬 Yorum:</strong> {{ entry.comment }}</p>
+                            {% endif %}
+                            {% if entry.suggestions %}
+                                <p class="mb-0"><strong>💡 Öneriler:</strong> {{ entry.suggestions }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="mt-3 d-flex justify-content-end gap-2">
+                        <a href="/edit-entry/{{ entry.id }}" class="btn btn-sm btn-warning">✏️ Düzenle</a>
+                        <a href="/delete-entry/{{ entry.id }}" class="btn btn-sm btn-danger">🗑 Sil</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center">
+            Henüz günlük kaydı yok.
+        </div>
+    {% endif %}
+
+    <!-- Alt kısım Anasayfa butonu -->
+    <div class="text-center mt-4">
+        <a href="/dashboard" class="home-btn">
+            ⬅ Anasayfa’ya Dön
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

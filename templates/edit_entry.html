@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Günlük Düzenle</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* Home Butonu Tasarımı */
+        .home-btn {
+            background-color: #6c72e6;
+            border: none;
+            color: white !important;
+            font-weight: 500;
+            padding: 0.5rem 1.3rem;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: background 0.2s ease;
+        }
+        .home-btn:hover {
+            background-color: #5a60d4;
+            text-decoration: none;
+            color: white !important;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="m-0">📝 Günlük Düzenle</h3>
+        <a href="/dashboard" class="home-btn">🏠 Dashboard</a>
+    </div>
+
+    <form method="post" action="/edit-entry/{{ entry.id }}">
+        <input type="hidden" name="user_id" value="{{ user_id }}">
+        <input type="hidden" name="username" value="{{ username }}">
+
+        <!-- İçerik -->
+        <div class="mb-3">
+            <label for="content" class="form-label">Günlük İçeriği</label>
+            <textarea class="form-control" id="content" name="content" rows="6">{{ entry.content }}</textarea>
+        </div>
+
+        <!-- Duygu -->
+        <div class="mb-3">
+            <label for="emotion" class="form-label">Duygu</label>
+            <select class="form-select" id="emotion" name="emotion">
+                {% set emotions = ["Üzgün", "Kederli", "Endişeli", "Yalnız", "Kararsız", "Sıkılmış", "Bunalmış", "Yorgun", "Mesafeli", "Nötr", "Huzurlu", "Memnun", "Mutlu", "Heyecanlı", "Çaresiz", "Kırgın", "Sıkışmış"] %}
+                {% for emo in emotions %}
+                    <option value="{{ emo }}" {% if entry.emotion == emo %}selected{% endif %}>{{ emo }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Butonlar -->
+        <div class="d-flex justify-content-between">
+            <a href="/all-entries?user_id={{ user_id }}&username={{ username }}" class="btn btn-secondary">İptal</a>
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
